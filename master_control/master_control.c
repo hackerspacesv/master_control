@@ -20,6 +20,8 @@
 #include <libopencm3/stm32/rcc.h>
 #include <libopencm3/stm32/gpio.h>
 
+#define LED_RED GPIOE, GPIO1
+
 static void gpio_setup(void)
 {
 	rcc_periph_clock_enable(RCC_GPIOE);
