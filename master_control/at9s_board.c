@@ -17,29 +17,27 @@
  * along with this library.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <libopencm3/stm32/rcc.h>
+#include <stdint.h>
 #include <libopencm3/stm32/gpio.h>
 #include "at9s_board.h"
 
-static void gpio_setup(void)
-{
-	rcc_periph_clock_enable(RCC_GPIOE);
-
-	at9s_gpio_set_mode(LED_RED, GPIO_MODE_OUTPUT_2_MHZ,
-		      GPIO_CNF_OUTPUT_PUSHPULL);
+void at9s_gpio_clear(struct GPIO_DEF_t gpiodef) {
+  gpio_clear(gpiodef.port, gpiodef.gpios); 
 }
 
-int main(void)
-{
-	int i;
-
-	gpio_setup();
-
-	while (1) {
-		at9s_gpio_toggle(LED_RED);
-		for (i = 0; i < 800000; i++)
-			__asm__("nop");
-	}
-
-	return 0;
+void at9s_gpio_set(struct GPIO_DEF_t gpiodef) {
+  gpio_set(gpiodef.port, gpiodef.gpios);  
 }
+
+uint8_t at9s_gpio_read(struct GPIO_DEF_t gpiodef) {
+  return (gpio_get(gpiodef.port, gpiodef.gpios)>0);
+}
+
+void at9s_gpio_toggle(struct GPIO_DEF_t gpiodef) {
+  gpio_toggle(gpiodef.port, gpiodef.gpios);
+}
+
+void at9s_gpio_set_mode(struct GPIO_DEF_t gpiodef, uint8_t mode, uint8_t cnf) {
+  gpio_set_mode(gpiodef.port, mode, cnf, gpiodef.gpios);
+}
+

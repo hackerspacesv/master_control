@@ -18,7 +18,7 @@
 ##
 
 BINARY = master_control
-
+OBJS   = at9s_board.o
 OPENCM3_DIR = ../libopencm3
 LDSCRIPT = ../stm32-at9s.ld
 
